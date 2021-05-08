@@ -25,5 +25,5 @@ btn.addEventListener("click", () => {
 // Function to get a random number
 function getRandomNumber() {
   // Use hex.length as multiple to get number between 0 and number of elements in hex array and use Math.floor to get lowest whole number
-  return Math.floor((Math.random() * hex.length));
+  return Math.floor(Math.random() * hex.length);
 }

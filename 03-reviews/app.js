@@ -39,3 +39,59 @@ const reviews = [
       "Edison bulb put a bird on it humblebrag, marfa pok pok heirloom fashion axe cray stumptown venmo actually seitan. VHS farm-to-table schlitz, edison bulb pop-up 3 wolf moon tote bag street art shabby chic. ",
   },
 ];
+
+// Get relevant placeholder elements for data
+const img = document.getElementById("person-img");
+const author = document.getElementById("author");
+const job = document.getElementById("job");
+const info = document.getElementById("info");
+
+// Get buttons elements
+const prevBtn = document.querySelector(".prev-btn");
+const nextBtn = document.querySelector(".next-btn");
+const randomBtn = document.querySelector(".random-btn");
+
+// Set starting item from reviews array
+let currentItem = 0;
+
+// Load initial item on page load
+window.addEventListener("DOMContentLoaded", () => {
+  // console.log("shake and bake!");
+  showReview();
+});
+
+// Show NEXT review
+nextBtn.addEventListener("click", () => {
+  currentItem++;
+  if (currentItem > reviews.length - 1) {
+    currentItem = 0;
+  }
+  showReview();
+});
+
+// Show PREV review
+prevBtn.addEventListener("click", () => {
+  currentItem--;
+  if (currentItem < 0) {
+    currentItem = reviews.length - 1;
+  }
+  showReview();
+});
+
+// Show RANDOM review
+randomBtn.addEventListener("click", () => {
+  currentItem = Math.floor(Math.random() * reviews.length);
+  console.log(`Random Review selected: ${currentItem}`);
+  showReview();
+});
+
+
+// Function to update display for specific review
+function showReview() {
+  const review = reviews[currentItem];  // Get review from array for current item
+  img.src = review.img;
+  author.textContent = review.name;
+  job.textContent = review.job;
+  info.textContent = review.text;
+}
+
