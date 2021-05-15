@@ -25,10 +25,6 @@
       "error",
       "windows"
     ],
-    "quotes": [
-      "warn",
-      "double"
-    ],
     "semi": [
       "error",
       "always"
