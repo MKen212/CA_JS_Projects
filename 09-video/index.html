@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="description" content="Video" />
+  <meta name="author" content="Malarena" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Video</title>
+
+  <!-- styles -->
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <!-- Pre-Loader -->
+  <div class="preloader">
+    <img src="./preloader.gif" alt="preloader" />
+  </div>
+
+  <!-- Header -->
+  <header>
+    <video class="video-container" muted autoplay loop>
+      <source src="./video.mp4" type="video/mp4" />
+    </video>
+    <h1>Video Project</h1>
+
+    <!-- Video Control Button -->
+    <button class="switch-btn">
+      <span>play</span>
+      <span>pause</span>
+      <span class="switch"></span>
+    </button>
+    <h4><a class="btn" href="../index.html">Home</a></h4>
+  </header>
+
+  <!-- javaScript -->
+  <script src="./app.js"></script>
+  
+</body>
+</html>
