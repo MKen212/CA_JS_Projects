@@ -20,6 +20,8 @@ grocery.focus();
 form.addEventListener("submit", submitItem);
 // Clear Items Button
 clearBtn.addEventListener("click", clearItems);
+// Load Items at Startup
+window.addEventListener("DOMContentLoaded", setupItems);
 
 // ****** FUNCTIONS **********
 // Event Function to Add or Edit an Item
@@ -28,37 +30,8 @@ function submitItem(event) {
   const value = grocery.value;
   const itemID = new Date().getTime().toString();  // Quick way to get unique ID
   if (value && !editFlag) {
-    // Value entered and NOT in edit mode - create new article
-    // Create new article
-    const newItem = document.createElement("article");
-    newItem.classList.add("grocery-item");
-    
-    // Add data-id to article
-    const attr = document.createAttribute("data-id");
-    attr.value = itemID; 
-    newItem.setAttributeNode(attr);
-    // console.log(attr);
-    
-    // Add content to article
-    newItem.innerHTML = `
-      <p class="title">${value}</p>
-      <div class="btn-container">
-        <button type="button" class="edit-btn">
-          <i class="fas fa-edit"></i>
-        </button>
-        <button type="button" class="delete-btn">
-          <i class="fas fa-trash"></i>
-        </button>
-      </div>`;
-    
-    // Add Event Listeners for new buttons
-    const editBtn = newItem.querySelector(".edit-btn");
-    editBtn.addEventListener("click", editItem);
-    const deleteBtn = newItem.querySelector(".delete-btn");
-    deleteBtn.addEventListener("click", deleteItem);
-    
-    // Add article to list and display success message
-    list.appendChild(newItem);
+    // Value entered and NOT in edit mode - create new item article
+    displayListItem(itemID, value);
     
     // Add item to local storage
     addToLocalStorage(itemID, value);
@@ -88,7 +61,6 @@ function submitItem(event) {
     // Empty value entered
     displayAlert("Empty value submitted", "danger");
   }
-
 }
 
 // Event Function to Clear all items
@@ -104,7 +76,7 @@ function clearItems() {
   }
   
   // Remove All Items from Local Storage
-  // localStorage.removeItem("list");
+  localStorage.removeItem("items");
   
   // Hide the grocery-container
   container.classList.remove("show-container");
@@ -172,7 +144,6 @@ function displayAlert(message, type) {
   }, 1000);
 }
 
-
 // Function to set page back to defaults & exit edit mode
 function setBackToDefaults() {
   grocery.value = "";
@@ -185,14 +156,11 @@ function setBackToDefaults() {
 // ****** LOCAL STORAGE **********
 // Function to Add Item to Local Storage
 function addToLocalStorage(id, value) {
-  // console.log(`Item '${id}' added to Local Storage with value ${value}`);
   const item = { id, value };
   // console.log(grocery);
 
   // Get items from local storage OR just set an empty array
-  let items = localStorage.getItem("items") ?
-    JSON.parse(localStorage.getItem("items")) :
-    [];
+  let items = getLocalStorage();
   
   // Add item
   items.push(item);
@@ -203,16 +171,93 @@ function addToLocalStorage(id, value) {
 
 // Function to Remove Item from Local Storage
 function removeFromLocalStorage(id) {
-  console.log(`Item '${id}' removed from Local Storage`);
+  // Get items from local storage
+  let items = getLocalStorage();
 
+  // Filter Items and only include items that are NOT ID
+  items = items.filter((item) => {
+    if (item.id !== id) {
+      return item;
+    }
+  });
+
+  // Store updated list
+  localStorage.setItem("items", JSON.stringify(items));
 }
 
 // Function to Update Item in Local Storage
 function updateLocalStorage(id, value) {
-  console.log(`Item '${id}' updated in Local Storage with value ${value}`);
+  // Get items from local storage
+  let items = getLocalStorage();
 
+  // Update relevant id from items
+  items = items.map((item) => {
+    if (item.id === id) {
+      item.value = value;
+    }
+    return item;
+  });
+
+  // Store updated list
+  localStorage.setItem("items", JSON.stringify(items));
+}
+
+// Function to Get items already in Local Storage
+function getLocalStorage() {
+  return localStorage.getItem("items") ?
+    JSON.parse(localStorage.getItem("items")) :
+    [];
 }
 
 
-
 // ****** SETUP ITEMS **********
+// Load any existing items on page load
+function setupItems() {
+  // Get items from local storage
+  let items = getLocalStorage();
+  
+  // Display any items found
+  if (items.length > 0) {
+    items.forEach((item) => {
+      displayListItem(item.id, item.value);
+
+    });
+
+    // Show Container
+    container.classList.add("show-container");
+  }
+}
+
+// Function to display a new item in the item list on screen
+function displayListItem(id, value) {
+  // Create new article
+  const newItem = document.createElement("article");
+  newItem.classList.add("grocery-item");
+  
+  // Add data-id to article
+  const attr = document.createAttribute("data-id");
+  attr.value = id; 
+  newItem.setAttributeNode(attr);
+  // console.log(attr);
+  
+  // Add content to article
+  newItem.innerHTML = `
+    <p class="title">${value}</p>
+    <div class="btn-container">
+      <button type="button" class="edit-btn">
+        <i class="fas fa-edit"></i>
+      </button>
+      <button type="button" class="delete-btn">
+        <i class="fas fa-trash"></i>
+      </button>
+    </div>`;
+  
+  // Add Event Listeners for new buttons
+  const editBtn = newItem.querySelector(".edit-btn");
+  editBtn.addEventListener("click", editItem);
+  const deleteBtn = newItem.querySelector(".delete-btn");
+  deleteBtn.addEventListener("click", deleteItem);
+  
+  // Add article to list and display success message
+  list.appendChild(newItem);
+}
