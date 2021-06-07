@@ -145,6 +145,28 @@ main {
   place-items: center;
 }
 
+.btn-hero {
+  font-family: var(--ff-primary);
+  text-transform: uppercase;
+  background: transparent;
+  color: var(--clr-black);
+  letter-spacing: var(--spacing);
+  display: inline-block;
+  font-weight: 700;
+  transition: var(--transition);
+  border: 2px solid var(--clr-black);
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  border-radius: var(--radius);
+  font-size: 1rem;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 10px;
+}
+.btn-hero:hover {
+  color: var(--clr-white);
+  background: var(--clr-black);
+}
+
 /*
 =============== 
 Slider Styles
@@ -158,6 +180,7 @@ Slider Styles
   /* margin-top: 5rem; */
   text-align: center;
   padding: 1rem 0;
+  /* set relative for buttons */
   position: relative;
 
   /* Temp */
@@ -192,7 +215,7 @@ Slider Styles
 }
 
 .name {
-  text-transform: capitalize;
+  text-transform: uppercase;
   font-weight: 500;
   color: var(--clr-primary-5);
   margin: 0.5rem 0;
@@ -216,6 +239,11 @@ Slider Styles
   font-size: 3rem;
   margin-top: 2rem;
   color: var(--clr-primary-5);
+}
+
+.quote-icon:hover {
+  transform: scale(1.1);
+  opacity: 0.8;
 }
 
 /* Set Buttons */
@@ -262,6 +290,29 @@ Slider Styles
   display: flex;
   position: relative;
   height: 450px;
-  /* overflow: hidden; */
-  background: var(--clr-primary-7);
+  overflow: hidden;
+  /* background: var(--clr-primary-7); */
+}
+
+.slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: var(--transition);
+  opacity: 0;
+}
+
+.slide.active {
+  opacity: 1;
+  transform:translateX(0);
+}
+
+.slide.next {
+  transform:translateX(100%);
+}
+
+.slide.prev {
+  transform:translateX(-100%);
 }

@@ -1,3 +1,5 @@
+"use strict";
+
 const people = [
   {
     img:
@@ -20,4 +22,14 @@ const people = [
     job: "designer",
     text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem quoeius recusandae officia voluptas sint deserunt dicta nihil nam omnis?`,
   },
+  {
+    img:
+      "https://res.cloudinary.com/diqqf3eq2/image/upload/c_scale,w_200/v1586883423/person-4_t9nxjt.jpg",
+    name: "bill anderson",
+    job: "the boss",
+    text: `Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem quoeius recusandae officia voluptas sint deserunt dicta nihil nam omnis?`,
+  },
 ];
+
+// Export the data
+export default people;
