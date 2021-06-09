@@ -45,17 +45,23 @@ nextBtn.addEventListener("click", () => {
 
 // Function to move slider
 function moveSlider (type) {
-  // console.log("Hello World", type);
-  // Get the current active/prev/next elements
+  // Get the current active & prev elements
   const active = document.querySelector(".active");
   const prev = document.querySelector(".prev");
-  let next = active.nextElementSibling;
-  // console.log(active, next);
+  // console.log(active, prev);
 
-  // Reset next to beginning if next does not exist
-  if (!next) {
-    next = container.firstElementChild;
+  // Get the next element
+  let next;
+  if (type === "next") {
+    next = active.nextElementSibling ?
+      active.nextElementSibling : 
+      container.firstElementChild;  // Reset next to beginning if next does not exist
+  } else if (type === "prev") {
+    next = prev.previousElementSibling ?
+      prev.previousElementSibling :
+      container.lastElementChild;  // Reset next to end if next does not exist
   }
+  // console.log(next);
 
   // Remove existing sub-class assignments from existing elements
   active.classList.remove("active");
@@ -71,11 +77,6 @@ function moveSlider (type) {
     // Assign new sub-class assignments to PREVIOUS elements
     active.classList.add("next");
     prev.classList.add("active");
-    next = prev.previousElementSibling;
-
-    // TO HERE
-
-
     next.classList.add("prev");
   }
 }
